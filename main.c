@@ -77,9 +77,10 @@ void taskC (void* pdata)
 //		short_printf("chaine: %s\n\r",chaine);
 		CoPendSem(Semaphore_rx, 0);
 		short_scanf(&command, &order, &value);
-		short_printf ("%i %i %i \n\r", (int) (robot_position.x*1000), (int) (robot_position.y * 1000), (int) (robot_position.theta * 1000));
-		short_printf ("%c %c %d \n\r", command, order, (int)(value *1000));
-		short_printf ("Je suis le roi du monde!!!!!! :D \n\r");
+//		short_printf ("%i %i %i \n\r", (int) (robot_position.x*1000), (int) (robot_position.y * 1000), (int) (robot_position.theta * 1000));
+//		short_printf ("%c %c %d \n\r", command, order, (int)(value *1000));
+		command_box(command, order, value);
+//		short_printf ("Je suis le roi du monde!!!!!! :D \n\r");
 //		short_printf ("1 2 3 \n\r", (int) (robot_position.x*1000), (int) (robot_position.y * 1000), (int) (robot_position.theta * 1000));
 
 	}
@@ -120,6 +121,7 @@ int main ()
    USART3_main_Init();
    IRQ_Init();
    init_global();
+   load_from_flash();
    Mutex_task_1 = CoCreateMutex( );
    Mutex_task_2 = CoCreateMutex( );
 //   Mutex_task_3 = CoCreateMutex( );
@@ -133,7 +135,7 @@ int main ()
    CoCreateTask (taskB,0,2,&taskB_stk[STACK_SIZE_TASKB-1],STACK_SIZE_TASKB);
    CoCreateTask (taskC,0,3,&taskC_stk[STACK_SIZE_TASKC-1],STACK_SIZE_TASKC);
    CoCreateTask (scheduler,0,63,&scheduler_stk[STACK_SIZE_SCHEDULER-1],STACK_SIZE_SCHEDULER);
-
+   short_printf("usart working \r\n");
    CoStartOS ();                                                  /*!< Start multitask               */
    while(1);
 

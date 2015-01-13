@@ -14,6 +14,8 @@ typedef struct {
 void fifo_init(fifo_t * f, char * buf, int size);
 
 void init_global();
+void save_to_flash();
+void load_from_flash();
 
 typedef struct POSITION {
 	float_t x;
